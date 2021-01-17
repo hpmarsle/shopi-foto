@@ -31,6 +31,11 @@ class Gallery{
     }
     postToFaves(e){
         let picToAdd = e.target.parentElement.parentElement
+        this.addPicToFavoritesContainer(picToAdd)
+
+    }
+
+    addPicToFavoritesContainer(picToAdd){
         let clone = picToAdd.cloneNode(true)
         clone.id += "1"
         let cloneFaveButton = clone.lastChild
