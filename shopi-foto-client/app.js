@@ -33,8 +33,10 @@ class Gallery{
         let picToAdd = e.target.parentElement.parentElement
         let clone = picToAdd.cloneNode(true)
         clone.id += "1"
-        let faveButton = clone.lastChild
-        clone.removeChild(faveButton)
+        let cloneFaveButton = clone.lastChild
+        let originalFaveButton = picToAdd.lastChild
+        clone.removeChild(cloneFaveButton)
+        picToAdd.removeChild(originalFaveButton)
         let faveContainer = document.getElementsByClassName('row')[1]
         faveContainer.appendChild(clone)
     }
