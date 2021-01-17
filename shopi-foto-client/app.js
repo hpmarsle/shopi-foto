@@ -13,16 +13,30 @@ class Gallery{
         let r = document.getElementsByClassName('row')[0]
         for(let i = 0; i < 6; i++){ 
             let photoCard = document.createElement('div')
+            photoCard.id = (i+1).toString()
             photoCard.classList.add('photo-card')
             photoCard.classList.add('col-xs-6')
             photoCard.classList.add('col-md-4')
             photoCard.innerHTML = this.photos[i]
             let fave_button = document.createElement('div')
             fave_button.classList.add('fave-button')
+            
+            fave_button.addEventListener("click", event => this.postToFaves(event))
+
+
             fave_button.innerHTML = "<button class='fave-button'>Favorite</button>"
             photoCard.appendChild(fave_button)
             r.appendChild(photoCard)
         }
+    }
+    postToFaves(e){
+        let picToAdd = e.target.parentElement.parentElement
+        let clone = picToAdd.cloneNode(true)
+        clone.id += "1"
+        let faveButton = clone.lastChild
+        clone.removeChild(faveButton)
+        let faveContainer = document.getElementsByClassName('row')[1]
+        faveContainer.appendChild(clone)
     }
 }
 
