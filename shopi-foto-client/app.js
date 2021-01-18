@@ -1,5 +1,3 @@
-
-
 class Gallery{
     constructor() {
         this.gallery = document.getElementById("photos-container")
@@ -21,18 +19,36 @@ class Gallery{
             let fave_button = document.createElement('div')
             fave_button.classList.add('fave-button')
             
-            fave_button.addEventListener("click", event => this.postToFaves(event))
-
-
-            fave_button.innerHTML = "<button class='fave-button'>Favorite</button>"
+            
+            
+            fave_button.innerHTML = "<form acton='https://localhost:3000/api/v1/photos' method='post'><input type='submit' class='fave-button' value='Favorite'/></form>"
+            fave_button.addEventListener("submit", event => this.postToFaves(event))
             photoCard.appendChild(fave_button)
             r.appendChild(photoCard)
         }
     }
     postToFaves(e){
         let picToAdd = e.target.parentElement.parentElement
+        let photo = picToAdd.firstElementChild
         this.addPicToFavoritesContainer(picToAdd)
+        
+        this.postToDB(photo)
+    }
 
+    postToDB(photo){
+        let configObj = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                url: photo.src
+            })
+        }
+        return fetch("http://localhost:3000/api/v1/photos",configObj)
+        .then(res => console.log(res.json()))
+        .catch(error => console.log(error))
     }
 
     addPicToFavoritesContainer(picToAdd){
