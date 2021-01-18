@@ -10,9 +10,10 @@ class Api::V1::PhotosController < ApplicationController
     end
 
     def create
-        photo = Photo.create(url)
+        photo = Photo.create(url: params[:url])
         repo = FavoritesRepo.first
         photo.favorites_repo = repo
         photo.save
+        render json: PhotoSerializer.new(photo)
     end
 end
